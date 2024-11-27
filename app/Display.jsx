@@ -129,7 +129,7 @@ function Display({ data, status }) {
       )}
       {status === 'loading' && (
         <div className="relative h-full flex flex-col items-center justify-center w-[min(368px,85dvw)]">
-          <p className="z-10 flex items-center justify-center text-black text-4xl mb-1">
+          <p className="z-10 flex items-center justify-center text-[hsl(255,50%,20%)] font-bold text-4xl mb-1">
             Loading...
           </p>
           <p className="z-10 flex items-center justify-center text-black">
