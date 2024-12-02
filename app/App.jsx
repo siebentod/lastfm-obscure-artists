@@ -15,11 +15,12 @@ function App() {
   const [userMe, setUserMe] = useState('');
   const [obscureUser, setObscureUser] = useState('activeshooter');
   const [obscurityMeter, setObscurityMeter] = useState(10000);
-  const [limit, setLimit] = useState(100);
+  const [limit, setLimit] = useState(50);
   const [period, setPeriod] = useState('overall');
   const [operationChosen, setOperationChosen] = useState('3');
   const [data, setData] = useState([]);
   const [status, setStatus] = useState('initial');
+  const [waitNumber, setWaitNumber] = useState('');
 
   async function getLastFMdata({
     userMe,
@@ -27,8 +28,15 @@ function App() {
     obscurityMeter,
     limit,
     operationChosen,
+    status,
+    setStatus,
+    setData,
+    setWaitNumber,
   }) {
+    if (status === 'loading') return;
     setStatus('loading');
+    setData([]);
+    setWaitNumber('');
     let data;
     if (operationChosen === '1') {
       data = await getArtistsSortedByScrobblesToListenersRatio({
@@ -43,6 +51,8 @@ function App() {
         limit,
         period,
         obscurityMeter,
+        setData,
+        setWaitNumber,
       });
     }
     if (operationChosen === '3') {
@@ -52,9 +62,10 @@ function App() {
         limit,
         period,
         obscurityMeter,
+        setData,
+        setWaitNumber,
       });
     }
-    console.log(data);
     data.length ? setStatus('loaded') : setStatus('error');
     setData(data);
   }
@@ -76,8 +87,12 @@ function App() {
           operationChosen={operationChosen}
           setOperationChosen={setOperationChosen}
           getLastFMdata={getLastFMdata}
+          status={status}
+          setStatus={setStatus}
+          setData={setData}
+          setWaitNumber={setWaitNumber}
         />
-        <Display data={data} status={status} />
+        <Display data={data} status={status} waitNumber={waitNumber} />
       </main>
       <LinksIcons color="text-light-bg" noabout />
     </div>

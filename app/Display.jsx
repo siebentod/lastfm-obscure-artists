@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { capitalizeWords } from './lib';
 
-function Display({ data, status }) {
+function Display({ data, status, waitNumber }) {
   const [filterMode, setFilterMode] = useState('');
   const [sortMode, setSortMode] = useState('userPlays');
 
-  if (data && data.length !== 0) {
+  if (status === 'loaded' && data && data.length !== 0) {
     data.sort((a, b) => b[sortMode] - a[sortMode]);
   }
 
@@ -110,6 +110,44 @@ function Display({ data, status }) {
         </div>
       )}
 
+      {status === 'loading' && (
+        <>
+          <div className="relative h-full flex flex-col items-center justify-center w-[min(360px,85dvw)]">
+            <p className="z-10 flex items-center justify-center text-[hsl(255,50%,20%)] font-bold text-2xl mb-0.5">
+              Data is loading&nbsp;
+              <span className="font-mono font-sans">
+                {waitNumber ? ` ${waitNumber}` : ''}
+              </span>
+            </p>
+
+            <p className="z-10 flex items-center justify-center font-bold text-[hsl(255,50%,20%)] ">
+              Please wait
+            </p>
+            {/* <p className="z-10 flex items-center justify-center text-black">
+              For 100 artists it can take up to 30 seconds.
+            </p> */}
+          </div>
+          <div className="bg-light-bg grid h-max mx-3 p-4 rounded-lg max-w-[500px]">
+            <div className="mx-auto">
+              <div className="mx-6">
+                {data?.map((item, index) => (
+                  <div key={index}>
+                    {index + 1}.{' '}
+                    <a
+                      href={`https://www.last.fm/music/${item.artistName}`}
+                      className="text-[hsl(255,50%,25%)] underline hover:text-[hsl(255,10%,35%)] max-w-[300px] inline-block align-text-bottom text-nowrap white-space-nowrap overflow-hidden text-ellipsis"
+                    >
+                      {item.artistName}
+                    </a>
+                    , {Math.round(item.userPlays)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {status === 'initial' && (
         <div className="h-full flex items-center justify-center w-[min(368px,85dvw)]">
           <p className="mx-3">
@@ -124,16 +162,6 @@ function Display({ data, status }) {
               have few listeners
             </span>
             .
-          </p>
-        </div>
-      )}
-      {status === 'loading' && (
-        <div className="relative h-full flex flex-col items-center justify-center w-[min(368px,85dvw)]">
-          <p className="z-10 flex items-center justify-center text-[hsl(255,50%,20%)] font-bold text-4xl mb-1">
-            Loading...
-          </p>
-          <p className="z-10 flex items-center justify-center text-black">
-            For 100 artists it can take up to 30 seconds.
           </p>
         </div>
       )}

@@ -12,6 +12,10 @@ function Interface({
   operationChosen,
   setOperationChosen,
   getLastFMdata,
+  setStatus,
+  status,
+  setData,
+  setWaitNumber,
 }) {
   return (
     <div className="bg-light-bg border border-[#4f0000] grid m-3 p-4 shadow-md rounded-lg xs:w-[400px] w-[350px] h-max">
@@ -24,6 +28,10 @@ function Interface({
             obscurityMeter,
             limit,
             operationChosen,
+            setStatus,
+            status,
+            setData,
+            setWaitNumber,
           });
         }}
       >
@@ -123,7 +131,10 @@ function Interface({
             Введите месяц (2022-05) или день (2022-05-05)
           </p> */}
 
-        <button className="text-[hsl(46,63%,97%)] bg-dark-button-default hover:bg-dark-button-hover block m-auto mt-2.5 py-2.5 px-5 rounded-lg transition shadow text-[1rem]">
+        <button
+          className="text-[hsl(46,63%,97%)] bg-dark-button-default hover:bg-dark-button-hover block m-auto mt-2.5 py-2.5 px-5 rounded-lg transition shadow text-[1rem] disabled:cursor-not-allowed disabled:hover:bg-dark-button-default"
+          disabled={status === 'loading'}
+        >
           Get Data
         </button>
       </form>
