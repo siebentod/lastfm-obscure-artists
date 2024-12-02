@@ -7,7 +7,7 @@ import { useState } from 'react';
 import {
   getUnknownToMeArtistsOfUser,
   getObscureArtistsOfUser,
-  getArtistsSortedByScrobblesToListenersRatio,
+  // getArtistsSortedByScrobblesToListenersRatio,
 } from './lib';
 import Interface from './Interface';
 
@@ -38,13 +38,13 @@ function App() {
     setData([]);
     setWaitNumber('');
     let data;
-    if (operationChosen === '1') {
-      data = await getArtistsSortedByScrobblesToListenersRatio({
-        user: userMe,
-        limit,
-        period,
-      });
-    }
+    // if (operationChosen === '1') {
+    //   data = await getArtistsSortedByScrobblesToListenersRatio({
+    //     user: userMe,
+    //     limit,
+    //     period,
+    //   });
+    // }
     if (operationChosen === '2') {
       data = await getObscureArtistsOfUser({
         user: obscureUser,

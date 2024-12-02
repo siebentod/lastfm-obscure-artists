@@ -33,6 +33,7 @@ export async function getUnknownToMeArtistsOfUser({
         {
           userPlays: artists[i]?.playcount,
           artistName,
+          url: artistData.artist?.url,
         },
       ]);
     }
@@ -51,10 +52,12 @@ export async function getUnknownToMeArtistsOfUser({
       allTags.push(artistsData[i].artist?.tags.tag[j]?.name);
       artistTags.push(artistsData[i].artist?.tags.tag[j]?.name);
     }
+    console.log(artistsData[i]);
     data.push({
       userPlays: artistsData[i].userPlays,
       myPlays: artistsData[i].artist?.stats?.userplaycount,
       artistName: artistsData[i].artistName,
+      url: artistsData[i].artist?.url,
       listeners: artistsData[i].artist?.stats?.listeners,
       ratio:
         artistsData[i].artist?.stats?.playcount /
@@ -102,6 +105,7 @@ export async function getObscureArtistsOfUser({
         {
           userPlays: artists[i]?.playcount,
           artistName,
+          url: artistData.artist?.url,
         },
       ]);
     }
@@ -124,6 +128,7 @@ export async function getObscureArtistsOfUser({
       userPlays: artistsData[i].userPlays,
       myPlays: artistsData[i].artist?.stats?.userplaycount,
       artistName: artistsData[i].artistName,
+      url: artistsData[i].artist?.url,
       listeners: artistsData[i].artist?.stats?.listeners,
       ratio:
         artistsData[i].artist?.stats?.playcount /
