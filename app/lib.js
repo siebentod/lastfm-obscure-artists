@@ -11,6 +11,8 @@ export async function getUnknownToMeArtistsOfUser({
 }) {
   let data = [];
   const artists = await getTopArtists({ user: obscureUser, limit, period });
+  const artistsTest = await getTopArtists({ user: userMe });
+  if (!artists || !artistsTest) return data;
 
   let artistsData = [];
 
@@ -87,6 +89,8 @@ export async function getObscureArtistsOfUser({
 }) {
   let data = [];
   const artists = await getTopArtists({ user, limit, period });
+  console.log(artists);
+  if (!artists) return data;
 
   let artistsData = [];
   for (let i = 0; i < artists.length; i++) {
