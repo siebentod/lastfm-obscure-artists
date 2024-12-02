@@ -219,6 +219,7 @@ async function getTopArtists({ user, limit, period }) {
 
 async function getArtistData(artist, userMe) {
   artist = encodeURIComponent(artist);
+  artist = encodeURIComponent(artist);
   return await getLastFM(
     'artist.getInfo',
     `artist=${artist}${userMe ? `&username=${userMe}` : ''}`
