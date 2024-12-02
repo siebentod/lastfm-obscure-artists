@@ -121,7 +121,11 @@ function Interface({
             className="bg-light-input border border-light-bg pl-1"
             value={obscurityMeter}
             onChange={(e) => {
-              setObscurityMeter(Number(e.target.value));
+              if (!isNaN(Number(e.target.value))) {
+                setObscurityMeter(Number(e.target.value));
+              } else {
+                setObscurityMeter(''); // или любое другое значение по умолчанию
+              }
             }}
             required
           ></input>
