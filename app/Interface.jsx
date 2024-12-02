@@ -124,7 +124,7 @@ function Interface({
               if (!isNaN(Number(e.target.value))) {
                 setObscurityMeter(Number(e.target.value));
               } else {
-                setObscurityMeter(''); // или любое другое значение по умолчанию
+                setObscurityMeter('');
               }
             }}
             required
