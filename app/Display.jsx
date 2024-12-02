@@ -135,7 +135,7 @@ function Display({ data, status, waitNumber }) {
                     {index + 1}.{' '}
                     <a
                       href={`https://www.last.fm/music/${item.artistName}`}
-                      className="text-[hsl(255,50%,25%)] underline hover:text-[hsl(255,10%,35%)] max-w-[300px] inline-block align-text-bottom text-nowrap white-space-nowrap overflow-hidden text-ellipsis"
+                      className="text-[hsl(255,50%,25%)] underline hover:text-[hsl(255,10%,35%)] max-w-[220px] inline-block align-text-bottom text-nowrap white-space-nowrap overflow-hidden text-ellipsis"
                     >
                       {item.artistName}
                     </a>
