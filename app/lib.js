@@ -54,7 +54,6 @@ export async function getUnknownToMeArtistsOfUser({
       allTags.push(artistsData[i].artist?.tags.tag[j]?.name);
       artistTags.push(artistsData[i].artist?.tags.tag[j]?.name);
     }
-    console.log(artistsData[i]);
     data.push({
       userPlays: artistsData[i].userPlays,
       myPlays: artistsData[i].artist?.stats?.userplaycount,
@@ -89,7 +88,6 @@ export async function getObscureArtistsOfUser({
 }) {
   let data = [];
   const artists = await getTopArtists({ user, limit, period });
-  console.log(artists);
   if (!artists) return data;
 
   let artistsData = [];
@@ -98,6 +96,7 @@ export async function getObscureArtistsOfUser({
     // const artistName = handleName(artists[i]?.name);
     const artistName = artists[i]?.name;
     const artistData = await getArtistData(artistName);
+    console.log(artistName, artistData);
     if (artistData.artist?.stats?.listeners < obscurityMeter) {
       artistsData.push({
         ...artistData,
@@ -219,9 +218,10 @@ async function getTopArtists({ user, limit, period }) {
 }
 
 async function getArtistData(artist, userMe) {
+  artist = encodeURIComponent(artist);
   return await getLastFM(
     'artist.getInfo',
-    `artist=${encodeURIComponent(artist)}${userMe ? `&username=${userMe}` : ''}`
+    `artist=${artist}${userMe ? `&username=${userMe}` : ''}`
   );
 }
 
