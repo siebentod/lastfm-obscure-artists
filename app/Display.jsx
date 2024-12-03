@@ -120,7 +120,7 @@ function Display({ data, status, waitNumber }) {
               </span>
             </p>
 
-            <p className="z-10 flex items-center justify-center font-bold text-[hsl(255,50%,20%)] ">
+            <p className="z-10 flex items-center justify-center font-semibold text-[hsl(255,50%,20%)] ">
               Please wait
             </p>
             {/* <p className="z-10 flex items-center justify-center text-black">
