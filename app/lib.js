@@ -89,6 +89,7 @@ export async function getObscureArtistsOfUser({
   let data = [];
   const artists = await getTopArtists({ user, limit, period });
   if (!artists) return data;
+  console.log(data);
 
   let artistsData = [];
   for (let i = 0; i < artists.length; i++) {

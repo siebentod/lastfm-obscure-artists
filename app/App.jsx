@@ -10,6 +10,7 @@ import {
   // getArtistsSortedByScrobblesToListenersRatio,
 } from './lib';
 import Interface from './Interface';
+import Head from 'next/head';
 
 function App() {
   const [userMe, setUserMe] = useState('');
@@ -95,6 +96,12 @@ function App() {
         <Display data={data} status={status} waitNumber={waitNumber} />
       </main>
       <LinksIcons color="text-light-bg" noabout />
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="yW0UNzfYP4wvVQU3xSXJO6QesaQccZ8FrrLVKo7xvtg"
+        />
+      </Head>
     </div>
   );
 }
