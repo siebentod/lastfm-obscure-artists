@@ -10,7 +10,6 @@ import {
   // getArtistsSortedByScrobblesToListenersRatio,
 } from './lib';
 import Interface from './Interface';
-import Head from 'next/head';
 
 function App() {
   const [userMe, setUserMe] = useState('');
@@ -72,39 +71,31 @@ function App() {
   }
 
   return (
-    <>
-      <Head>
-        <meta
-          name="google-site-verification"
-          content="yW0UNzfYP4wvVQU3xSXJO6QesaQccZ8FrrLVKo7xvtg"
+    <div className="pt-12">
+      <main className="mx-auto relative flex flex-wrap justify-center">
+        <Interface
+          userMe={userMe}
+          setUserMe={setUserMe}
+          obscureUser={obscureUser}
+          setObscureUser={setObscureUser}
+          obscurityMeter={obscurityMeter}
+          setObscurityMeter={setObscurityMeter}
+          limit={limit}
+          period={period}
+          setPeriod={setPeriod}
+          setLimit={setLimit}
+          operationChosen={operationChosen}
+          setOperationChosen={setOperationChosen}
+          getLastFMdata={getLastFMdata}
+          status={status}
+          setStatus={setStatus}
+          setData={setData}
+          setWaitNumber={setWaitNumber}
         />
-      </Head>
-      <div className="pt-12">
-        <main className="mx-auto relative flex flex-wrap justify-center">
-          <Interface
-            userMe={userMe}
-            setUserMe={setUserMe}
-            obscureUser={obscureUser}
-            setObscureUser={setObscureUser}
-            obscurityMeter={obscurityMeter}
-            setObscurityMeter={setObscurityMeter}
-            limit={limit}
-            period={period}
-            setPeriod={setPeriod}
-            setLimit={setLimit}
-            operationChosen={operationChosen}
-            setOperationChosen={setOperationChosen}
-            getLastFMdata={getLastFMdata}
-            status={status}
-            setStatus={setStatus}
-            setData={setData}
-            setWaitNumber={setWaitNumber}
-          />
-          <Display data={data} status={status} waitNumber={waitNumber} />
-        </main>
-        <LinksIcons color="text-light-bg" noabout />
-      </div>
-    </>
+        <Display data={data} status={status} waitNumber={waitNumber} />
+      </main>
+      <LinksIcons color="text-light-bg" noabout />
+    </div>
   );
 }
 
