@@ -13,6 +13,10 @@ export async function GET(request) {
     const data = await response.json();
     return new Response(JSON.stringify(data), {
       status: 200,
+      headers: {
+        'Cache-Control': 's-maxage=86400, stale-while-revalidate=3600',
+        'Content-Type': 'application/json',
+      },
     });
   } catch (error) {
     console.error('Error fetching data:', error);
