@@ -5,7 +5,7 @@ export async function GET(request) {
   const url = `http://ws.audioscrobbler.com/2.0/${query}&api_key=${api_key}&format=json`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: 'force-cache' });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -18,6 +18,9 @@ export async function GET(request) {
     console.error('Error fetching data:', error);
     return new Response(JSON.stringify({ error: 'Error fetching data' }), {
       status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
   }
 }
