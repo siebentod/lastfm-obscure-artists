@@ -5,7 +5,10 @@ export async function GET(request) {
   const url = `http://ws.audioscrobbler.com/2.0/${query}&api_key=${api_key}&format=json`;
 
   try {
-    const response = await fetch(url, { cache: 'force-cache' });
+    const response = await fetch(url, {
+      cache: 'force-cache',
+      next: { revalidate: 2592000 },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
