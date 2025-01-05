@@ -19,7 +19,7 @@ function LinksIcons({
           <FaInfo />
         </Link>
       )}
-      <a href="https://github.com/siebentod/lastfm-obscure-artists">
+      <a href="https://github.com/siebentod">
         <FaGithub />
       </a>
     </div>
