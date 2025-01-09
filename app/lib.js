@@ -92,28 +92,30 @@ export async function getObscureArtistsOfUser({
   console.log(data);
 
   let artistsData = [];
-  for (let i = 0; i < artists.length; i++) {
+
+  const promises = artists.map(async (artist, i) => {
     setWaitNumber(`${(i + 1).toString().padStart(2, '0')}/${artists.length}`);
-    // const artistName = handleName(artists[i]?.name);
-    const artistName = artists[i]?.name;
+    const artistName = artist?.name;
     const artistData = await getArtistData(artistName);
     console.log(artistName, artistData);
     if (artistData.artist?.stats?.listeners < obscurityMeter) {
       artistsData.push({
         ...artistData,
-        userPlays: artists[i]?.playcount,
+        userPlays: artist?.playcount,
         artistName,
       });
       setData((prev) => [
         ...prev,
         {
-          userPlays: artists[i]?.playcount,
+          userPlays: artist?.playcount,
           artistName,
           url: artistData.artist?.url,
         },
       ]);
     }
-  }
+  });
+
+  await Promise.all(promises);
 
   artistsData.sort(
     (a, b) =>
