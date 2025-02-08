@@ -1,3 +1,9 @@
+import { config } from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+  config({ path: '.env.local' });
+}
+
 export async function GET(request) {
   const api_key = process.env.API_KEY;
   const fullPath = decodeURIComponent(request.url);
