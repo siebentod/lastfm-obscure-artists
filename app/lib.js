@@ -8,6 +8,7 @@ export async function getUnknownToMeArtistsOfUser({
   obscurityMeter,
   setData,
   setWaitNumber,
+  status,
 }) {
   let data = [];
   const artists = await getTopArtists({ user: obscureUser, limit, period });
@@ -15,30 +16,44 @@ export async function getUnknownToMeArtistsOfUser({
   if (!artists || !artistsTest) return data;
 
   let artistsData = [];
+  let processedCount = 0;
 
-  for (let i = 0; i < artists.length; i++) {
-    setWaitNumber(`${(i + 1).toString().padStart(2, '0')}/${artists.length}`);
-    // const artistName = handleName(artists[i]?.name);
-    const artistName = artists[i]?.name;
-    const artistData = await getArtistData(artistName, userMe);
-    if (
-      artistData.artist?.stats?.userplaycount < 10 &&
-      artistData.artist?.stats?.listeners < obscurityMeter
-    ) {
-      artistsData.push({
-        ...artistData,
-        userPlays: artists[i]?.playcount,
-        artistName,
-      });
-      setData((prev) => [
-        ...prev,
-        {
-          userPlays: artists[i]?.playcount,
+  try {
+    const promises = artists.map(async (artist) => {
+      if (status === 'stopped') {
+        throw new Error('Operation stopped by user');
+      }
+
+      const artistName = artist?.name;
+      const artistData = await getArtistData(artistName, userMe);
+
+      processedCount++;
+      setWaitNumber(`${processedCount.toString().padStart(2, '0')}/${artists.length}`);
+
+      if (
+        artistData.artist?.stats?.userplaycount < 10 &&
+        artistData.artist?.stats?.listeners < obscurityMeter
+      ) {
+        artistsData.push({
+          ...artistData,
+          userPlays: artist?.playcount,
           artistName,
-          url: artistData.artist?.url,
-        },
-      ]);
-    }
+        });
+        setData((prev) => [
+          ...prev,
+          {
+            userPlays: artist?.playcount,
+            artistName,
+            url: artistData.artist?.url,
+          },
+        ]);
+      }
+    });
+
+    await Promise.all(promises);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 
   artistsData.sort(
@@ -85,37 +100,53 @@ export async function getObscureArtistsOfUser({
   obscurityMeter,
   setData,
   setWaitNumber,
+  abortController,
 }) {
   let data = [];
   const artists = await getTopArtists({ user, limit, period });
   if (!artists) return data;
-  console.log(data);
 
   let artistsData = [];
+  let processedCount = 0;
 
-  const promises = artists.map(async (artist, i) => {
-    setWaitNumber(`${(i + 1).toString().padStart(2, '0')}/${artists.length}`);
-    const artistName = artist?.name;
-    const artistData = await getArtistData(artistName);
-    console.log(artistName, artistData);
-    if (artistData.artist?.stats?.listeners < obscurityMeter) {
-      artistsData.push({
-        ...artistData,
-        userPlays: artist?.playcount,
-        artistName,
-      });
-      setData((prev) => [
-        ...prev,
-        {
+  try {
+    const promises = artists.map(async (artist) => {
+      if (abortController.signal.aborted) {
+        throw new Error('Operation aborted');
+      }
+
+      const artistName = artist?.name;
+      const artistData = await getArtistData(artistName, undefined, abortController);
+
+      processedCount++;
+      setWaitNumber(
+        `${processedCount.toString().padStart(2, '0')}/${artists.length}`
+      );
+
+      if (artistData.artist?.stats?.listeners < obscurityMeter) {
+        artistsData.push({
+          ...artistData,
           userPlays: artist?.playcount,
           artistName,
-          url: artistData.artist?.url,
-        },
-      ]);
-    }
-  });
+        });
+        setData((prev) => [
+          ...prev,
+          {
+            userPlays: artist?.playcount,
+            artistName,
+            url: artistData.artist?.url,
+          },
+        ]);
+      }
+    });
 
-  await Promise.all(promises);
+    await Promise.all(promises);
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw error;
+    }
+    console.error(error);
+  }
 
   artistsData.sort(
     (a, b) =>
@@ -195,15 +226,18 @@ export async function getObscureArtistsOfUser({
 // }
 
 // # Complementary Functions
-async function getLastFM(method, param) {
+async function getLastFM(method, param, abortController) {
   const url = `/api/?url=?method=${method}&${param}`;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: abortController?.signal });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
+    if (error.name === 'AbortError') {
+      throw error;
+    }
     console.error('Error fetching data:', error);
     return null;
   }
@@ -220,13 +254,19 @@ async function getTopArtists({ user, limit, period }) {
   return artists?.topartists?.artist;
 }
 
-async function getArtistData(artist, userMe) {
-  artist = encodeURIComponent(artist);
-  artist = encodeURIComponent(artist);
-  return await getLastFM(
-    'artist.getInfo',
-    `artist=${artist}${userMe ? `&username=${userMe}` : ''}`
-  );
+async function getArtistData(artist, userMe, abortController) {
+  try {
+    artist = encodeURIComponent(artist);
+    artist = encodeURIComponent(artist);
+    return await getLastFM(
+      'artist.getInfo',
+      `artist=${artist}${userMe ? `&username=${userMe}` : ''}`,
+      abortController
+    );
+  } catch (error) {
+    console.error(`Error getting data for artist ${artist}:`, error);
+    throw error;
+  }
 }
 
 export function capitalizeWords(text) {

@@ -135,12 +135,31 @@ function Interface({
             Введите месяц (2022-05) или день (2022-05-05)
           </p> */}
 
-        <button
-          className="text-[hsl(46,63%,97%)] bg-dark-button-default hover:bg-dark-button-hover block m-auto mt-2.5 py-2.5 px-5 rounded-lg transition shadow text-[1rem] disabled:cursor-not-allowed disabled:hover:bg-dark-button-default"
-          disabled={status === 'loading'}
-        >
-          Get Data
-        </button>
+<div className="flex gap-2 justify-center mt-2.5">
+  <button
+    className={`text-[hsl(46,63%,97%)] ${
+      status === 'loading' 
+        ? 'bg-[black]' 
+        : 'bg-dark-button-default hover:bg-dark-button-hover'
+    } py-2.5 px-5 rounded-lg transition shadow text-[1rem] disabled:cursor-not-allowed disabled:hover:bg-dark-button-default`}
+    disabled={status === 'loading'}
+  >
+    Get Data
+  </button>
+  {/* <button
+    type="button"
+    onClick={() => setStatus('stopped')}
+    disabled={status !== 'loading'}
+    className={`text-[hsl(46,63%,97%)] ${
+      status === 'loading'
+        ? 'bg-dark-button-default hover:bg-dark-button-hover'
+        : 'bg-[black]'
+    } py-2.5 px-5 rounded-lg transition shadow text-[1rem] disabled:cursor-not-allowed`}
+  >
+    Stop
+  </button> */}
+  {/* Это не работает с Promises.all */}
+</div>
       </form>
     </div>
   );

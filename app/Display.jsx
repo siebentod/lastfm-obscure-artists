@@ -83,9 +83,9 @@ function Display({ data, status, waitNumber }) {
                 className="bg-dark-button-default text-[hsl(46,63%,97%)] pl-1 cursor-help"
                 onChange={(e) => setSortMode(e.target.value)}
                 value={sortMode}
-                title="Ratio = Total Scrobbles / Total Listeners"
+                title="Ratio = Total Scrobbles (all users) / Total Listeners"
               >
-                <option value="userPlays">top</option>
+                <option value="userPlays">scrobbles</option>
                 <option value="ratio">ratio</option>
                 <option value="listeners">listeners</option>
               </select>
@@ -148,7 +148,7 @@ function Display({ data, status, waitNumber }) {
         </>
       )}
 
-      {status === 'initial' && (
+      {(status === 'initial' || status === 'stopped') && (
         <div className="h-full flex items-center justify-center w-[min(368px,85dvw)]">
           <p className="mx-3">
             Hello! This is a small utility that compares two Last.FM accounts
