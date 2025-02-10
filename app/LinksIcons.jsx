@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaGithub, FaHome, FaInfo } from 'react-icons/fa';
+import { FaGithub, FaHome, FaInfo, FaFirefox } from 'react-icons/fa';
 
 function LinksIcons({
   color = 'text-white',
@@ -19,6 +19,9 @@ function LinksIcons({
           <FaInfo />
         </Link>
       )}
+      <a href="https://addons.mozilla.org/en-US/firefox/addon/last-fm-get-obscure-artists/">
+        <FaFirefox />
+      </a>
       <a href="https://github.com/siebentod">
         <FaGithub />
       </a>
