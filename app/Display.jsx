@@ -149,9 +149,28 @@ function Display({ data, status, waitNumber }) {
       )}
 
       {(status === 'initial' || status === 'stopped') && (
-        <div className="h-full flex items-center justify-center w-[min(368px,85dvw)]">
+        <div className="h-full flex flex-col justify-center w-[min(368px,85dvw)]">
           <p className="mx-3">
-          This is a small utility that compares two Last.FM accounts and shows artists which <span className="text-[hsl(255,50%,25%)] font-semibold">you are not familiar with</span> (scrobbled less than 10 times), and <span className="text-[hsl(255,50%,25%)] font-semibold">have few listeners</span> (obscure). Check out <a className='underline' href="https://addons.mozilla.org/en-US/firefox/addon/last-fm-get-obscure-artists/">Firefox addon</a>.
+            This is a small utility that compares two Last.FM profiles and shows
+            artists that:
+            <span className="ml-5 inline-block text-[hsl(255,50%,25%)] font-semibold">
+              – you are not familiar with
+            </span>{' '}
+            (scrobbled less than 10 times), and
+            <div className='ml-5'><span className="text-[hsl(255,50%,25%)] font-semibold">
+              – have few listeners
+            </span>{' '}
+            (obscure).</div>
+          </p>
+          <p className='mx-3'>
+            Check out{' '}
+            <a
+              className="underline"
+              href="https://addons.mozilla.org/en-US/firefox/addon/last-fm-get-obscure-artists/"
+            >
+              Firefox addon
+            </a>
+            .
           </p>
         </div>
       )}
