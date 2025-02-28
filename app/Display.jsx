@@ -62,7 +62,7 @@ function Display({ data, status, waitNumber }) {
 
   return (
     <div className="bg-light-bg grid min-h-[165px] h-max shadow-md m-3 p-4 rounded-lg max-w-[500px]">
-      {status === 'loaded' && (
+      {(status === 'loaded' || (status === 'error' && data?.length)) && (
         <div className="mx-auto">
           <div className="flex items-center relative">
             <button
@@ -92,6 +92,9 @@ function Display({ data, status, waitNumber }) {
             </div>
           </div>
           <div className="mx-6 mt-1.5">
+            {status === 'error' && (
+              <div>The operation completed with an error.</div>
+            )}
             {filterMode === '' &&
               data.map((item, index) => (
                 <div key={index}>
@@ -157,12 +160,14 @@ function Display({ data, status, waitNumber }) {
               – you are not familiar with
             </span>{' '}
             (scrobbled less than 10 times), and
-            <div className='ml-5'><span className="text-[hsl(255,50%,25%)] font-semibold">
-              – have few listeners
-            </span>{' '}
-            (obscure).</div>
+            <div className="ml-5">
+              <span className="text-[hsl(255,50%,25%)] font-semibold">
+                – have few listeners
+              </span>{' '}
+              (obscure).
+            </div>
           </p>
-          <p className='mx-3'>
+          <p className="mx-3">
             Check out{' '}
             <a
               className="underline"
