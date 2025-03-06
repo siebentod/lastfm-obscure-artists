@@ -15,7 +15,7 @@ function App() {
   const [abortController, setAbortController] = useState(null);
   const [userMe, setUserMe] = useState('');
   const [obscureUser, setObscureUser] = useState('activeshooter');
-  const [obscurityMeter, setObscurityMeter] = useState(10000);
+  const [obscurityMeter, setObscurityMeter] = useState(15000);
   const [limit, setLimit] = useState(150);
   const [period, setPeriod] = useState('overall');
   const [operationChosen, setOperationChosen] = useState('3');
