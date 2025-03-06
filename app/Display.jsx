@@ -153,6 +153,16 @@ function Display({ data, status, waitNumber }) {
 
       {(status === 'initial' || status === 'stopped') && (
         <div className="h-full flex flex-col justify-center w-[min(368px,85dvw)]">
+        <p className="mx-3 mb-2">
+          🔥 Check out{' '}
+          <a
+            className="underline"
+            href="https://addons.mozilla.org/en-US/firefox/addon/last-fm-get-obscure-artists/"
+          >
+            Firefox add-on
+          </a>
+          .
+        </p>
           <p className="mx-3">
             This is a small utility that compares two Last.FM profiles and shows
             artists that:
@@ -166,16 +176,6 @@ function Display({ data, status, waitNumber }) {
               </span>{' '}
               (obscure).
             </div>
-          </p>
-          <p className="mx-3">
-            Check out{' '}
-            <a
-              className="underline"
-              href="https://addons.mozilla.org/en-US/firefox/addon/last-fm-get-obscure-artists/"
-            >
-              Firefox addon
-            </a>
-            .
           </p>
         </div>
       )}
