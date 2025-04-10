@@ -93,7 +93,7 @@ function Display({ data, status, waitNumber }) {
           </div>
           <div className="mx-6 mt-1.5">
             {status === 'error' && (
-              <div>The operation completed with an error.</div>
+              <div>The operation completed with some error.</div>
             )}
             {filterMode === '' &&
               data.map((item, index) => (
@@ -180,7 +180,7 @@ function Display({ data, status, waitNumber }) {
         </div>
       )}
 
-      {status === 'error' && (
+      {status === 'error' && !data?.length && (
         <div className="flex flex-col relative select-none">
           <div className="relative flex items-center justify-center h-full">
             <img src="/image2.webp" className="absolute h-full object-cover" />
